@@ -7,6 +7,13 @@
     <title>Tarefa 2</title>
 </head>
 <body>
-    
+    <canvas></canvas>
+    <script>
+        const canvas = document.querySelector("canvas");
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "lightblue";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    </script>
 </body>
 </html>
