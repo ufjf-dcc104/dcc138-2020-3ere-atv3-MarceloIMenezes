@@ -12,15 +12,41 @@
         const canvas = document.querySelector("canvas");
         const ctx = canvas.getContext("2d");
 
-        const cavaleiro = new Image();
-        cavaleiro.src = "assets/cavaleiro02.png";
+        const aviao = new Image();
+        aviao.src = "assets/airplane_final.png";
+        
+        function desenhaFundo() {
+            ctx.fillStyle = "lightblue";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        //coluna e linha
+        let pose = 0;
+        let quadro = 0;
+        const POSES = [
+            {qmax: 5, pv: 8},
+            {qmax: 5, pv: 10},
+            {qmax: 5, pv: 30},
+            {qmax: 6, pv: 30}
+        ];   
 
-        ctx.fillStyle = "lightblue";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        let t0;
+        let dt;
+        
+        requestAnimationFrame(animacao);
+        function animacao(t) {
+            t0 = t0 ?? t;
+            dt = (t - t0)/1000;
+            desenhaFundo();
 
-        cavaleiro.addEventListener("load", carregouAsset);
-        function carregouAsset() {
-            ctx.drawImage(cavaleiro, 0, 0);
+            quadro = (quadro > POSES[pose].qmax - 1) ? 0 : quadro + POSES[pose].pv*dt;
+            
+            ctx.drawImage(aviao, 
+            Math.floor(quadro)*64, Math.floor(pose)*64, 64, 64,
+            0, 0, 64, 64);
+
+            requestAnimationFrame(animacao);
+            t0 = t;
         }
 
     </script>
